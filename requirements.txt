@@ -1,0 +1,14 @@
+# Python dependencies for entanglement-entropy-tutorial
+
+# Core dependencies
+numpy>=1.20.0
+scipy>=1.7.0
+
+# For randomized SVD
+scikit-learn>=1.0.0
+
+# Testing
+pytest>=7.0.0
+
+# Optional: for data analysis and plotting
+matplotlib>=3.5.0

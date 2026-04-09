@@ -1,0 +1,56 @@
+% ee_chain_bipartition.tex — 1D chain bipartition diagram
+% Compile: pdflatex ee_chain_bipartition.tex
+\documentclass[border=5pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing, calc}
+
+\begin{document}
+\begin{tikzpicture}[
+    site/.style={circle, draw=black, fill=#1, inner sep=0pt, minimum size=7pt, line width=0.6pt},
+    site/.default={white},
+    bond/.style={line width=0.8pt, black},
+    label/.style={font=\footnotesize},
+]
+
+% Parameters
+\def\n{12}       % total sites
+\def\nA{6}       % sites in A (half-chain)
+\def\dx{0.8}     % horizontal spacing
+
+% Draw bonds first (behind sites)
+\foreach \i in {1,...,\numexpr\n-1} {
+    \draw[bond] ({(\i-1)*\dx}, 0) -- ({\i*\dx}, 0);
+}
+
+% Draw sites: A (blue) and B (red)
+\foreach \i in {1,...,\nA} {
+    \node[site={blue!25}] (s\i) at ({(\i-1)*\dx}, 0) {};
+}
+\foreach \i in {\numexpr\nA+1,...,\n} {
+    \node[site={red!20}] (s\i) at ({(\i-1)*\dx}, 0) {};
+}
+
+% Dashed cut line
+\draw[dashed, thick, red!70!black, line width=1pt]
+    ({(\nA-0.5)*\dx}, -0.6) -- ({(\nA-0.5)*\dx}, 0.6);
+
+% Subsystem labels
+\draw[decorate, decoration={brace, amplitude=5pt, mirror}, thick, blue!70!black]
+    (0, -0.45) -- ({(\nA-1)*\dx}, -0.45)
+    node[midway, below=6pt, font=\small, blue!70!black] {Subsystem $A$};
+
+\draw[decorate, decoration={brace, amplitude=5pt, mirror}, thick, red!70!black]
+    ({\nA*\dx}, -0.45) -- ({(\n-1)*\dx}, -0.45)
+    node[midway, below=6pt, font=\small, red!70!black] {Subsystem $B$};
+
+% Site index labels
+\node[above=4pt, font=\scriptsize, gray] at (s1) {$1$};
+\node[above=4pt, font=\scriptsize, gray] at (s\nA) {$\ell$};
+\node[above=4pt, font=\scriptsize, gray] at (s\n) {$L$};
+
+% Cut label
+\node[above=0.6cm, font=\small, red!70!black] at ({(\nA-0.5)*\dx}, 0)
+    {entangling point};
+
+\end{tikzpicture}
+\end{document}
